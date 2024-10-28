@@ -33,9 +33,9 @@ class NoTapeError extends Error {
 }
 
 export class Deck<D> {
-  perform: (d: D) => void;
-  tape: null | Tape<D>;
-  state: DeckState;
+  private perform: (d: D) => void;
+  private tape: null | Tape<D>;
+  private state: DeckState;
 
   constructor(perform : ((d: D) => void)) {
     this.tape = null;
@@ -43,16 +43,7 @@ export class Deck<D> {
     this.state = { state: TapeState.Stopped, at: 0 }
   };
 
-  load(tape: Tape<D>) {
-    this.tape = tape;
-    return this;
-  };
-
-  eject() : null | Tape<D> {
-    return this.tape;
-  }
-
-  _newAt() : number {
+  private _newAt() : number {
     switch(this.state.state) {
       case TapeState.Stopped:
           return this.state.at;
@@ -62,7 +53,16 @@ export class Deck<D> {
     }
   }
 
-  play() : void {
+  public load(tape: Tape<D>) {
+    this.tape = tape;
+    return this;
+  };
+
+  public eject() : null | Tape<D> {
+    return this.tape;
+  }
+
+  public play() : void {
     if(!this.tape) {
       throw new NoTapeError();
     }
@@ -84,7 +84,7 @@ export class Deck<D> {
     }
   }
 
-  stop() : void {
+  public stop() : void {
     if(!this.tape) {
       throw new NoTapeError();
     }
@@ -98,21 +98,21 @@ export class Deck<D> {
     }
   }
 
-  rewind() : void {
+  public rewind() : void {
     if(!this.tape) {
       throw new NoTapeError();
     }
     this.state = { state: TapeState.Stopped, at: 0 }
   }
 
-  fastForward() : void {
+  public fastForward() : void {
     if(!this.tape) {
       throw new NoTapeError();
     }
     this.state = { state: TapeState.Stopped, at: this.tape.length }
   }
 
-  record<R>(recorder: ((rawEvent: R) => D)) : ((rawEvent: R) => void) {
+  public record<R>(transcribe: ((rawEvent: R) => D)) : ((rawEvent: R) => void) {
     if(!this.tape) {
       throw new NoTapeError();
     }
@@ -121,13 +121,13 @@ export class Deck<D> {
     const from = this._newAt();
     this.state = { state: TapeState.Recording, from: from, since: since }
     const now = () => new Date().getTime() - since.getTime() + from;
-    return ((le) => {
+    return ((rawEvent) => {
       if(!this.tape) {
         throw new NoTapeError();
       }
       void this.tape.events.push({
         t: now(),
-        d: recorder(le)
+        d: transcribe(rawEvent)
       });
     })
   }
