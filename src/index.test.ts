@@ -1,7 +1,6 @@
 import { afterEach, beforeEach, describe, expect, it, vi, test} from 'vitest'
 import { Deck } from "./index";
 
-
 const mock = vi.fn();
 
 const tape = {
@@ -95,12 +94,12 @@ describe("Recording onto a tape", () => {
     expect(tape).toEqual({
       length: 5000,
       events: [
-        { d: "bop", t: 2000 },
-        { d: "bop", t: 2063 },
-        { d: "bop", t: 2188 },
-        { d: "bop", t: 2251 },
-        { d: "bop", t: 2314 },
-        { d: "bop", t: 4000 },
+        { t: 2000, d: "bop" },
+        { t: 2063, d: "bop" },
+        { t: 2188, d: "bop" },
+        { t: 2251, d: "bop" },
+        { t: 2314, d: "bop" },
+        { t: 4000, d: "bop" }
       ]
     });
   });

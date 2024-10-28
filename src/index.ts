@@ -1,7 +1,3 @@
-export function player(fn: (d: any) => void) {
-  return `Hello !`;
-}
-
 declare function setTimeout(handler: (...args: any[]) => void, timeout: number): any;
 declare function clearTimeout(handle: any): void;
 
@@ -36,8 +32,6 @@ class NoTapeError extends Error {
   }
 }
 
-function unreachable(value: never) {}
-
 export class Deck<D> {
   perform: (d: D) => void;
   tape: null | Tape<D>;
@@ -68,7 +62,7 @@ export class Deck<D> {
     }
   }
 
-  play() {
+  play() : void {
     if(!this.tape) {
       throw new NoTapeError();
     }
@@ -90,7 +84,7 @@ export class Deck<D> {
     }
   }
 
-  stop() {
+  stop() : void {
     if(!this.tape) {
       throw new NoTapeError();
     }
@@ -104,14 +98,14 @@ export class Deck<D> {
     }
   }
 
-  rewind() {
+  rewind() : void {
     if(!this.tape) {
       throw new NoTapeError();
     }
     this.state = { state: TapeState.Stopped, at: 0 }
   }
 
-  fastForward() {
+  fastForward() : void {
     if(!this.tape) {
       throw new NoTapeError();
     }
@@ -169,8 +163,6 @@ export class Deck<D> {
     recording -> stop -> stopped
     recording -> play -> playing
     recording -> fast forward -> stopped (at end)
-  
-  ticket: add a 'seeking' state, to be reached with FF and REW
   
   */
 }

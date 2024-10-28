@@ -1,0 +1,6 @@
+add a 'seeking' state, to be reached with FF and REW
+test for funky state/method call combinations
+account for calling the recorder function after the deck has stopped
+stop the tape at the end of its length
+parse/validate for positive tape length
+support visual cursor/playhead for recording, playback

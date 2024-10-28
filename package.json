@@ -1,5 +1,5 @@
 {
-  "name": "@windmountain/eventscore",
+  "name": "@windmountain/eventcassette",
   "version": "0.1.0",
   "description": "Play and record timed events",
   "main": "dist/index.js",
@@ -22,10 +22,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/windmountain/eventscore"
+    "url": "https://github.com/windmountain/eventcassette"
   },
   "bugs": {
-    "url": "https://github.com/windmountain/eventscore/issues"
+    "url": "https://github.com/windmountain/eventcassette/issues"
   },
-  "homepage": "https://github.com/windmountain/eventscore#readme"
+  "homepage": "https://github.com/windmountain/eventcassette#readme"
 }
